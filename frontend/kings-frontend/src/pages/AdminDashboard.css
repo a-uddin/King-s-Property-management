@@ -1,0 +1,87 @@
+/* Full-page container */
+.admin-dashboard {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* VIBRANT GRADIENT BACKGROUND ANIMATION */
+  .vibrant-bg {
+    background: linear-gradient(-45deg, #1f1c2c, #928dab, #1f4037, #99f2c8);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+  }
+  
+  /* Center content area */
+  .welcome-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+  }
+  
+  /* Animated title */
+  .welcome-title {
+    font-size: 2.5em;
+    font-weight: 700;
+    margin-bottom: 0.5em;
+    animation: bounceIn 1s ease-out;
+  }
+  
+  /* Subtitle animation */
+  .welcome-subtitle {
+    font-size: 1.3em;
+    opacity: 0;
+    animation: slideFadeIn 1.2s ease-out forwards;
+    animation-delay: 0.6s;
+  }
+  
+  /* BUTTON hover animation idea if needed later */
+  button {
+    transition: all 0.3s ease-in-out;
+  }
+  button:hover {
+    box-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff;
+  }
+  
+  /* ========== ANIMATIONS ========== */
+  
+  /* Background gradient shift */
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  /* Bounce entrance */
+  @keyframes bounceIn {
+    0% {
+      transform: scale(0.3);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+    70% {
+      transform: scale(0.9);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  /* Slide + fade */
+  @keyframes slideFadeIn {
+    0% {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }

@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap');
+
+
+table th, table td {
+    vertical-align: middle;
+    
+  }
+  
+  .badge {
+    font-size: 0.9rem;
+  }
+
+  .font-styl {
+    font-family: "Alegreya", serif;
+  }
+  

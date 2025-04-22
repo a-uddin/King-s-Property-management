@@ -1,0 +1,24 @@
+.home-background {
+    background: linear-gradient(270deg, #74ebd5, #acb6e5, #ffecd2);
+    background-size: 600% 600%;
+    animation: gradientShift 12s ease infinite;
+    min-height: 100vh;
+  }
+  
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .glass-box {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 40px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #fff;
+  }
+
+  
