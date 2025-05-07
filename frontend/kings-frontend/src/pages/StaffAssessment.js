@@ -29,11 +29,15 @@ const StaffAssessment = () => {
   const fetchAssets = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("/api/assigned-tasks/with-asset", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_BASE_URL}/assigned-tasks/with-asset`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
 
       const allTasks = response.data || [];
 
@@ -82,7 +86,7 @@ const StaffAssessment = () => {
     if (confirm.isConfirmed) {
       try {
         await axios.post(
-          "/api/assessments",
+          `${process.env.REACT_APP_API_BASE_URL}/assessments`,
           { assetID, marketValue: Number(newValue) },
           {
             headers: {
@@ -95,7 +99,7 @@ const StaffAssessment = () => {
         setNewValue("");
         //fetchAssets();
         const { data: history } = await axios.get(
-          `/api/assessments/${assetID}/history`,
+          `${process.env.REACT_APP_API_BASE_URL}/assessments/${assetID}/history`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -165,11 +169,12 @@ const StaffAssessment = () => {
 
   const fetchHistory = async (assetID, assetName) => {
     try {
-      const res = await axios.get(`/api/assessments/${assetID}/history`, {
+      const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/assessments/${assetID}/history`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+
       setHistoryData(res.data);
       setSelectedAssetName(assetName);
       setShowHistoryModal(true);

@@ -24,7 +24,7 @@ const Login = ({ show, handleClose }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        `${process.env.REACT_APP_API_BASE_URL}/auth/login`,
         { email, password }
       );
 
@@ -49,7 +49,10 @@ const Login = ({ show, handleClose }) => {
 
   const handleForgotPassword = async () => {
     try {
-      await axios.post("/api/users/forgot-password", { email: forgotEmail });
+      await axios.post(
+        `${process.env.REACT_APP_API_BASE_URL}/users/forgot-password`,
+        { email: forgotEmail }
+      );
       setEmailSent(true);
     } catch (error) {
       console.error("Reset error:", error);

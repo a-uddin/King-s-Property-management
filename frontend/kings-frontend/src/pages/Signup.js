@@ -23,7 +23,7 @@ const Signup = ({ onSuccess }) => {
     setMessage("");
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/signup", {
+      const res = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/auth/signup`, {
         firstName,
         lastName,
         email,
@@ -32,7 +32,7 @@ const Signup = ({ onSuccess }) => {
         address,
         companyName,
         companyRegNo,
-        
+
       });
 
       setMessage(res.data.message || "Signup successful! Awaiting admin approval.");

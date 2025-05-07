@@ -32,11 +32,14 @@ const MyTask = () => {
   useEffect(() => {
     const fetchInvoicesForUser = async () => {
       try {
-        const res = await axios.get(`/api/invoices/user/${user._id}`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_BASE_URL}/invoices/user/${user._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
 
         setUserInvoices(res.data); // ✅ save invoices directly for modal
       } catch (err) {
@@ -50,7 +53,8 @@ const MyTask = () => {
 
   const fetchUserInvoices = async () => {
     try {
-      const res = await axios.get("/api/invoices");
+      const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/invoices`);
+
       const invoices = res.data;
 
       // Filter invoices submitted by current user
@@ -73,11 +77,12 @@ const MyTask = () => {
 
   const fetchTasks = async () => {
     try {
-      const res = await axios.get("/api/assigned-tasks", {
+      const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/assigned-tasks`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+
 
       // 🔥 1. Filter tasks assigned to the logged-in user
       const assignedToMe = res.data.filter(
@@ -90,11 +95,15 @@ const MyTask = () => {
       );
 
       // 🔥 3. Fetch all ongoing maintenances
-      const ongoingRes = await axios.get("/api/ongoing-maintenance", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const ongoingRes = await axios.get(
+        `${process.env.REACT_APP_API_BASE_URL}/ongoing-maintenance`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
 
       const ongoingData = ongoingRes.data;
 
@@ -140,7 +149,7 @@ const MyTask = () => {
       try {
         setUpdatingId(taskId);
         await axios.patch(
-          `/api/assigned-tasks/update-status/${taskId}`,
+          `${process.env.REACT_APP_API_BASE_URL}/assigned-tasks/update-status/${taskId}`,
           { taskStatus: newStatus },
           {
             headers: {
@@ -148,6 +157,7 @@ const MyTask = () => {
             },
           }
         );
+
         const updated = tasks.map((t) =>
           t._id === taskId ? { ...t, taskStatus: newStatus } : t
         );
@@ -197,7 +207,7 @@ const MyTask = () => {
     try {
       // Step 1: get the real ongoingMaintenance ID
       const res = await axios.get(
-        `/api/ongoing-maintenance/by-assigned-task/${assignedTaskId}`,
+        `${process.env.REACT_APP_API_BASE_URL}/ongoing-maintenance/by-assigned-task/${assignedTaskId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -205,11 +215,12 @@ const MyTask = () => {
         }
       );
 
+
       const ongoingId = res.data._id;
 
       // Step 2: PATCH the estimatedCompletion
       await axios.patch(
-        `/api/ongoing-maintenance/${ongoingId}`,
+        `${process.env.REACT_APP_API_BASE_URL}/ongoing-maintenance/${ongoingId}`,
         { estimatedCompletion: newDate },
         {
           headers: {
@@ -217,6 +228,7 @@ const MyTask = () => {
           },
         }
       );
+
 
       // ✅ Update local task state immediately so the new date is reflected in UI
       setTasks((prev) =>

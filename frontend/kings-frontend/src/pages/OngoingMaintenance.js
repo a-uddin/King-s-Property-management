@@ -26,7 +26,9 @@ const OngoingMaintenance = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const fetchData = async () => {
-    const res = await axios.get("/api/ongoing-maintenance");
+    const res = await axios.get(
+      `${process.env.REACT_APP_API_BASE_URL}/ongoing-maintenance`
+    );
     setData(res.data);
   };
 
@@ -47,7 +49,10 @@ const OngoingMaintenance = () => {
     if (!confirm.isConfirmed) return;
 
     try {
-      await axios.patch(`/api/ongoing-maintenance/${id}`, { [field]: value });
+      await axios.patch(
+        `${process.env.REACT_APP_API_BASE_URL}/ongoing-maintenance/${id}`,
+        { [field]: value }
+      );
 
       await Swal.fire({
         icon: "success",

@@ -14,7 +14,7 @@ const EmailModal = ({ show, handleClose, userEmail }) => {
   const handleSend = async () => {
     setLoading(true);
     try {
-      await axios.post("/api/email/send", {
+      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/email/send`, {
         to: userEmail,
         subject,
         message,

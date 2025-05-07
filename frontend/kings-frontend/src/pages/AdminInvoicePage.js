@@ -15,7 +15,7 @@ const AdminInvoicePage = () => {
   useEffect(() => {
     const fetchInvoices = async () => {
       try {
-        const res = await axios.get("/api/invoices/admin", {
+        const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/invoices/admin`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -43,7 +43,7 @@ const AdminInvoicePage = () => {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.patch(
-          `/api/invoices/${invoiceId}/status`,
+          `${process.env.REACT_APP_API_BASE_URL}/invoices/${invoiceId}/status`,
           { status: newStatus },
           {
             headers: {
@@ -51,6 +51,7 @@ const AdminInvoicePage = () => {
             },
           }
         );
+
 
         // ✅ Update local invoice list without refreshing entire list
         setInvoices((prev) =>

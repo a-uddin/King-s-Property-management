@@ -36,7 +36,7 @@ const ProfilePage = () => {
     e.preventDefault();
     try {
       const res = await axios.patch(
-        "/api/admin-profile/update",
+        `${process.env.REACT_APP_API_BASE_URL}/admin-profile/update`,
         { ...profile },
         {
           headers: {

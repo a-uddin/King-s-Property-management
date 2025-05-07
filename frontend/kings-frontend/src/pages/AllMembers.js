@@ -29,9 +29,10 @@ const AllMembers = () => {
   const fetchMembers = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("/api/all-members/approved", {
+      const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/all-members/approved`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+
       setMembers(res.data);
     } catch (error) {
       console.error("Error fetching members:", error);
@@ -47,10 +48,11 @@ const AllMembers = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "/api/email/send",
-        { to, subject, message }, //sending email is handled by backend/routes/emails.js
+        `${process.env.REACT_APP_API_BASE_URL}/email/send`,
+        { to, subject, message },
         { headers: { Authorization: `Bearer ${token}` } }
       );
+
       alert("✅ Email sent successfully!");
       setShowModal(false);
     } catch (error) {
@@ -74,9 +76,10 @@ const AllMembers = () => {
 
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`/api/all-members/${userId}`, {
+      await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/all-members/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+
 
       fetchMembers();
 
@@ -116,12 +119,16 @@ const AllMembers = () => {
   const handleSaveChanges = async (updatedUser) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.put(`/api/all-members/${updatedUser._id}`, updatedUser, {
+
+      await axios.put(`${process.env.REACT_APP_API_BASE_URL}/all-members/${updatedUser._id}`, updatedUser, {
         headers: { Authorization: `Bearer ${token}` },
       });
+
       alert("✅ User updated successfully!");
+
       setShowEditModal(false);
       fetchMembers(); // Refresh list
+
     } catch (error) {
       console.error("Update failed:", error);
       alert("❌ Failed to update user");

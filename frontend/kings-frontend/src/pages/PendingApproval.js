@@ -16,7 +16,9 @@ const PendingApproval = () => {
 
   const fetchPendingUsers = async () => {
     try {
-      const res = await axios.get("/api/users/pending");
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_BASE_URL}/users/pending`
+      );
       setPendingUsers(res.data);
     } catch (err) {
       console.error("Error fetching pending users:", err);
@@ -34,7 +36,7 @@ const PendingApproval = () => {
     }
     try {
       await axios.patch(
-        `/api/approvals/${user._id}/approve`, // Also handles sending email on Approval backend/routes/approval.js
+        `${process.env.REACT_APP_API_BASE_URL}/approvals/${user._id}/approve`,
         { role },
         {
           headers: {
@@ -42,6 +44,7 @@ const PendingApproval = () => {
           },
         }
       );
+
       setAlert({
         type: "success",
         message: `✅ ${user.firstName} approved and email sent.`,
@@ -59,7 +62,7 @@ const PendingApproval = () => {
   const handleReject = async (user) => {
     try {
       await axios.patch(
-        `/api/approvals/${user._id}/reject`, // Also handles sending email on reject backend/routes/approval.js
+        `${process.env.REACT_APP_API_BASE_URL}/approvals/${user._id}/reject`,
         {},
         {
           headers: {
@@ -67,6 +70,7 @@ const PendingApproval = () => {
           },
         }
       );
+
       setAlert({
         type: "success",
         message: `❌ ${user.firstName} rejected and email sent.`,

@@ -40,9 +40,11 @@ const ShowAssets = () => {
 
   const fetchAllUsers = async () => {
     try {
-      const res = await axios.get("/api/users");
+      const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/users`);
+
       console.log("Fetched ALL users:", res.data);
-      setAssignUsers(res.data); // 💡 Use separate state here
+      setAssignUsers(res.data);
+
     } catch (err) {
       console.error("Failed to fetch all users:", err.message);
       setAssignUsers([]); // fallback
@@ -50,13 +52,15 @@ const ShowAssets = () => {
   };
 
   const fetchAssets = async () => {
-    const res = await axios.get("/api/assets");
+    const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/assets`);
     setAssets(res.data);
   };
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("/api/users/approved-users");
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_BASE_URL}/users/approved-users`
+      );
       console.log("Fetched users:", res.data);
       const filtered = res.data.filter(
         (user) =>
@@ -90,10 +94,12 @@ const ShowAssets = () => {
         );
         if (!confirm) return;
 
-        await axios.put(`/api/assets/${editId}`, assetPayload);
+        await axios.put(`${process.env.REACT_APP_API_BASE_URL}/assets/${editId}`, assetPayload);
+
         setAlertMessage("✅ Asset updated successfully");
       } else {
-        await axios.post("/api/assets", assetPayload);
+        await axios.post(`${process.env.REACT_APP_API_BASE_URL}/assets`, assetPayload);
+
         setAlertMessage("✅ Asset added successfully");
       }
 
@@ -123,7 +129,8 @@ const ShowAssets = () => {
     if (!confirm.isConfirmed) return;
 
     try {
-      await axios.delete(`/api/assets/${id}`);
+      await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/assets/${id}`);
+
       await fetchAssets();
       Swal.fire({
         icon: "success",
@@ -180,7 +187,7 @@ const ShowAssets = () => {
 
     try {
       setSelectedAssetId(assetId);
-      const res = await axios.get("/api/users");
+      const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/users`);
       setAssignUsers(res.data);
       setShowAssignModal(true);
     } catch (err) {
@@ -192,10 +199,13 @@ const ShowAssets = () => {
 
   const handleAssignUser = async (userId) => {
     try {
-      await axios.put(`/api/assets/${selectedAssetId}/assign`, {
-        // backend/asset.js is handle this assign user..
-        assignedTo: userId,
-      });
+      await axios.put(
+        `${process.env.REACT_APP_API_BASE_URL}/assets/${selectedAssetId}/assign`,
+        {
+          assignedTo: userId,
+        }
+      );
+
 
       fetchAssets(); // Refresh table
       setShowAssignModal(false);

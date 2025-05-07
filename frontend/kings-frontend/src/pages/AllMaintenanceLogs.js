@@ -10,7 +10,7 @@ const AllMaintenanceLogs = () => {
   useEffect(() => {
     const fetchLogs = async () => {
       try {
-        const res = await axios.get("/api/maintenance/logs");
+        const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/maintenance/logs`);
         setLogs(res.data);
       } catch (err) {
         console.error("Failed to fetch maintenance logs:", err);

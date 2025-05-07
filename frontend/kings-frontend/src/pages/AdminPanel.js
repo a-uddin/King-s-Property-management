@@ -9,7 +9,7 @@ const AdminPanel = () => {
   useEffect(() => {
     const fetchPendingUsers = async () => {
       try {
-        const response = await axios.get('/api/users/pending');
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/users/pending`);
         setPendingUsers(response.data);
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -27,9 +27,9 @@ const AdminPanel = () => {
     try {
       const selectedRole = selectedRoles[userId] || 'external_company';
       const token = JSON.parse(localStorage.getItem("user"))?.token;
-  
+
       await axios.patch(
-        `/api/users/${userId}/approve`,
+        `${process.env.REACT_APP_API_BASE_URL}/users/${userId}/approve`,
         {
           approved: true,
           role: selectedRole,
@@ -41,20 +41,21 @@ const AdminPanel = () => {
           },
         }
       );
-  
+
       setPendingUsers((prev) => prev.filter((user) => user._id !== userId));
     } catch (error) {
       console.error('Approval error:', error);
     }
   };
-  
+
 
   const handleReject = async (userId) => {
     try {
-      await axios.patch(`/api/users/${userId}/reject`, {
+      await axios.patch(`${process.env.REACT_APP_API_BASE_URL}/users/${userId}/reject`, {
         approved: false,
         message,
       });
+
 
       setPendingUsers((prev) => prev.filter((user) => user._id !== userId));
     } catch (error) {

@@ -27,11 +27,14 @@ const AssignedTask = () => {
 
   const fetchTasks = async () => {
     try {
-      const response = await axios.get("/api/assigned-tasks", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_BASE_URL}/assigned-tasks`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
       // ⬇️ Initialize statusEditable: true ONLY if task is Pending
       const tasksWithEditableFlag = response.data.map((task) => ({
@@ -47,11 +50,15 @@ const AssignedTask = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("/api/users", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_BASE_URL}/users`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
       setUsers(res.data);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -104,25 +111,35 @@ const AssignedTask = () => {
       note: note,
       scheduledMaintenance: selectedTask.scheduledMaintenance,
       taskStatus: selectedTask.taskStatus || "Pending",
-      assignedFor: assignedFor, 
+      assignedFor: assignedFor,
     };
 
     try {
       // 🔵 If assigned task has an _id, try updating first
       if (selectedTask._id) {
-        await axios.patch(`/api/assigned-tasks/${selectedTask._id}`, payload, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        await axios.patch(
+          `${process.env.REACT_APP_API_BASE_URL}/assigned-tasks/${selectedTask._id}`,
+          payload,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
         //alert("Task updated successfully!");
       } else {
         // ⚪ Otherwise, create a new assigned task
-        await axios.post(`/api/assigned-tasks`, payload, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        await axios.post(
+          `${process.env.REACT_APP_API_BASE_URL}/assigned-tasks`,
+          payload,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        
         alert("Task assigned successfully!");
       }
     } catch (error) {
@@ -151,7 +168,7 @@ const AssignedTask = () => {
     if (confirm.isConfirmed) {
       try {
         await axios.patch(
-          `/api/assigned-tasks/update-status/${taskId}`,
+          `${process.env.REACT_APP_API_BASE_URL}/assigned-tasks/update-status/${taskId}`,
           { taskStatus: newStatus },
           {
             headers: {
@@ -217,127 +234,127 @@ const AssignedTask = () => {
                 style={{ width: "500px", maxWidth: "100%" }}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-        </div>
+            </div>
 
-        <div className="table-responsive">
-          <table className="table table-striped table-bordered">
-            <thead className="thead-dark">
-              <tr>
-                <th>Asset Name</th>
-                <th>Type</th>
-                <th>Location</th>
-                <th>Assigned To</th>
-                <th>Assigned For</th>
-                <th>Note</th>
-                <th>Action</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredTasks.length > 0 ? (
-                filteredTasks.map((task) => {
-                  return (
-                    <tr key={task._id}>
-                      <td>{task.assetName || "No Name"}</td>
-                      <td>{task.assetType || "No Type"}</td>
-                      <td>{task.location || "No Location"}</td>
-                      <td>
-                        {task.assignedTo
-                          ? `${task.assignedTo.firstName} ${task.assignedTo.lastName}`
-                          : "Unassigned"}
-                      </td>
-                      <td>{task.assignedFor || "Maintenance"}</td>
+            <div className="table-responsive">
+              <table className="table table-striped table-bordered">
+                <thead className="thead-dark">
+                  <tr>
+                    <th>Asset Name</th>
+                    <th>Type</th>
+                    <th>Location</th>
+                    <th>Assigned To</th>
+                    <th>Assigned For</th>
+                    <th>Note</th>
+                    <th>Action</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredTasks.length > 0 ? (
+                    filteredTasks.map((task) => {
+                      return (
+                        <tr key={task._id}>
+                          <td>{task.assetName || "No Name"}</td>
+                          <td>{task.assetType || "No Type"}</td>
+                          <td>{task.location || "No Location"}</td>
+                          <td>
+                            {task.assignedTo
+                              ? `${task.assignedTo.firstName} ${task.assignedTo.lastName}`
+                              : "Unassigned"}
+                          </td>
+                          <td>{task.assignedFor || "Maintenance"}</td>
 
-                      <td>{task.note || "--"}</td>
-                      <td
-                        style={{
-                          verticalAlign: "middle",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        <button
-                          className="btn btn-outline-primary btn-sm px-2 py-1"
-                          style={{ fontSize: "0.85rem" }}
-                          onClick={() => handleOpenAssignModal(task)}
-                        >
-                          Assign / Edit
-                        </button>
-                      </td>
-
-                      <td>
-                        {task.statusEditable ? (
-                          <select
-                            className="form-select form-select-sm"
-                            value={task.taskStatus}
-                            onChange={(e) =>
-                              handleStatusChange(task._id, e.target.value)
-                            }
+                          <td>{task.note || "--"}</td>
+                          <td
+                            style={{
+                              verticalAlign: "middle",
+                              whiteSpace: "nowrap",
+                            }}
                           >
-                            <option value="Pending">Pending</option>
-                            <option value="Ongoing">Ongoing</option>
-                            <option value="Paused">Paused</option>
-                            <option value="Review">Review</option>
-                            <option value="Completed">Completed</option>
-                          </select>
-                        ) : (
-                          <div className="d-flex align-items-center">
-                            <span
-                              className={`badge me-2 ${
-                                task.taskStatus === "Pending"
-                                  ? "bg-warning"
-                                  : task.taskStatus === "Ongoing"
-                                  ? "bg-primary"
-                                  : task.taskStatus === "Paused"
-                                  ? "bg-info"
-                                  : task.taskStatus === "Review"
-                                  ? "bg-secondary"
-                                  : task.taskStatus === "Completed"
-                                  ? "bg-success"
-                                  : "bg-dark"
-                              }`}
-                            >
-                              {task.taskStatus}
-                            </span>
                             <button
-                              className="btn btn-sm btn-outline-secondary"
-                              onClick={() => makeEditable(task._id)}
-                              title="Edit Status"
+                              className="btn btn-outline-primary btn-sm px-2 py-1"
+                              style={{ fontSize: "0.85rem" }}
+                              onClick={() => handleOpenAssignModal(task)}
                             >
-                              🖉
+                              Assign / Edit
                             </button>
-                          </div>
-                        )}
+                          </td>
+
+                          <td>
+                            {task.statusEditable ? (
+                              <select
+                                className="form-select form-select-sm"
+                                value={task.taskStatus}
+                                onChange={(e) =>
+                                  handleStatusChange(task._id, e.target.value)
+                                }
+                              >
+                                <option value="Pending">Pending</option>
+                                <option value="Ongoing">Ongoing</option>
+                                <option value="Paused">Paused</option>
+                                <option value="Review">Review</option>
+                                <option value="Completed">Completed</option>
+                              </select>
+                            ) : (
+                              <div className="d-flex align-items-center">
+                                <span
+                                  className={`badge me-2 ${
+                                    task.taskStatus === "Pending"
+                                      ? "bg-warning"
+                                      : task.taskStatus === "Ongoing"
+                                      ? "bg-primary"
+                                      : task.taskStatus === "Paused"
+                                      ? "bg-info"
+                                      : task.taskStatus === "Review"
+                                      ? "bg-secondary"
+                                      : task.taskStatus === "Completed"
+                                      ? "bg-success"
+                                      : "bg-dark"
+                                  }`}
+                                >
+                                  {task.taskStatus}
+                                </span>
+                                <button
+                                  className="btn btn-sm btn-outline-secondary"
+                                  onClick={() => makeEditable(task._id)}
+                                  title="Edit Status"
+                                >
+                                  🖉
+                                </button>
+                              </div>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })
+                  ) : (
+                    <tr>
+                      <td colSpan="8" className="text-center">
+                        No tasks found.
                       </td>
                     </tr>
-                  );
-                })
-              ) : (
-                <tr>
-                  <td colSpan="8" className="text-center">
-                    No tasks found.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                  )}
+                </tbody>
+              </table>
 
-          <AssignEditModal
-            show={showAssignModal}
-            onHide={handleCloseAssignModal}
-            task={selectedTask}
-            users={users}
-            selectedUserId={selectedUserId}
-            setSelectedUserId={setSelectedUserId}
-            assignedFor={assignedFor}
-            setAssignedFor={setAssignedFor}
-            note={note}
-            setNote={setNote}
-            onSave={handleSave}
-          />
-        </div>
-      </div>
-      </main>
-      <Footer />
+              <AssignEditModal
+                show={showAssignModal}
+                onHide={handleCloseAssignModal}
+                task={selectedTask}
+                users={users}
+                selectedUserId={selectedUserId}
+                setSelectedUserId={setSelectedUserId}
+                assignedFor={assignedFor}
+                setAssignedFor={setAssignedFor}
+                note={note}
+                setNote={setNote}
+                onSave={handleSave}
+              />
+            </div>
+          </div>
+        </main>
+        <Footer />
       </div>
     </>
   );

@@ -8,7 +8,7 @@ const AssetStats = () => {
   useEffect(() => {
     const fetchAssets = async () => {
       try {
-        const res = await axios.get("/api/assets"); // Adjust if needed
+        const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/assets`);
         setAssets(res.data);
       } catch (err) {
         console.error("Failed to fetch assets", err);

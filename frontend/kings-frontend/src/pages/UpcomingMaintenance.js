@@ -22,7 +22,9 @@ const UpcomingMaintenance = () => {
 
   const fetchAssets = async () => {
     try {
-      const res = await axios.get("/api/maintenance/upcoming-maintenance");
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_BASE_URL}/maintenance/upcoming-maintenance`
+      );
       setAssets(res.data);
     } catch (err) {
       console.error("Error fetching maintenance assets:", err);
@@ -63,17 +65,21 @@ const UpcomingMaintenance = () => {
         popup: "shadow rounded",
       },
     });
-  
+
     if (!confirm.isConfirmed) return;
-  
+
     try {
-      await axios.patch(`/api/maintenance/${assetId}/update`, {
-        maintenanceType,
-        maintenanceNotes,
-      });
-  
+      await axios.patch(
+        `${process.env.REACT_APP_API_BASE_URL}/maintenance/${assetId}/update`,
+        {
+          maintenanceType,
+          maintenanceNotes,
+        }
+      );
+
+
       setFormData((prev) => ({ ...prev, [assetId]: {} }));
-  
+
       Swal.fire({
         icon: "success",
         title: "Saved",

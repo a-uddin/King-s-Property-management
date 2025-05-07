@@ -27,7 +27,7 @@ const AllAssessment = () => {
   const fetchAssets = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("/api/assessments/assigned-only", {
+      const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/assessments/assigned-only`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -57,10 +57,11 @@ const AllAssessment = () => {
       try {
         const token = localStorage.getItem("token");
         await axios.post(
-          "/api/assessments",
+          `${process.env.REACT_APP_API_BASE_URL}/assessments`,
           { assetID, marketValue: Number(newValue) },
           { headers: { Authorization: `Bearer ${token}` } }
         );
+
 
         setEditingRow(null);
         setNewValue("");
@@ -93,7 +94,7 @@ const AllAssessment = () => {
   const fetchHistory = async (assetID, assetName) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get(`/api/assessments/${assetID}/history`, {
+      const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/assessments/${assetID}/history`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -127,7 +128,7 @@ const AllAssessment = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/assessments/${id}`,
+        `${process.env.REACT_APP_API_BASE_URL}/assessments/${id}`,
         {
           method: "DELETE",
           headers: {

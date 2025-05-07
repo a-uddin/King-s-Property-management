@@ -35,7 +35,7 @@ const ExternalProfilePage = () => {
     e.preventDefault();
     try {
       const res = await axios.patch(
-        "/api/users/profile/update",
+        `${process.env.REACT_APP_API_BASE_URL}/users/profile/update`,
         { ...profile },
         {
           headers: {
@@ -43,6 +43,7 @@ const ExternalProfilePage = () => {
           },
         }
       );
+
       setAlert({ type: "success", message: res.data.message });
       setTimeout(() => {
         setAlert(null);

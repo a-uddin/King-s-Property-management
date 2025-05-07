@@ -24,15 +24,15 @@ const AdminStats = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const usersRes = await axios.get("/api/users");
+        const usersRes = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/users`);
         setUsers(usersRes.data);
 
-        const assetsRes = await axios.get("/api/assets");
+        const assetsRes = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/assets`);
         setAssets(assetsRes.data);
 
         const [upcomingRes, ongoingRes] = await Promise.all([
-          axios.get("/api/maintenance/upcoming-maintenance"),
-          axios.get("/api/maintenance/ongoing-maintenance"),
+          axios.get(`${process.env.REACT_APP_API_BASE_URL}/maintenance/upcoming-maintenance`),
+          axios.get(`${process.env.REACT_APP_API_BASE_URL}/maintenance/ongoing-maintenance`)
         ]);
 
         // Combine both sets into a single array and mark their type
