@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Italiana&display=swap');
+
+.brand-font {
+  font-family: "Italiana", sans-serif;
+  color: white;
+  font-weight: bold;
+  padding-right: 20px;
+}
+
+.nav-hover {
+    position: relative;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .nav-hover::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    left: 0;
+    bottom: -4px;
+    background-color: #ffffff;
+    transition: 0.3s ease-in-out;
+  }
+  
+  .nav-hover:hover::after {
+    width: 100%;
+  }
+  

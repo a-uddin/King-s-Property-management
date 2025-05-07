@@ -22,7 +22,7 @@ const Home = () => {
   }, [user, navigate]);
 
   return (
-    <div className="home-background">
+    <div className="home-background home-font-style">
       <Container className="d-flex flex-column justify-content-center align-items-center min-vh-100">
         <div className="glass-box text-center p-4">
           <h1 className="mb-3 text-dark">Welcome to Kings Property Portal 🏢</h1>
@@ -44,7 +44,7 @@ const Home = () => {
       <Login show={showLogin} handleClose={() => setShowLogin(false)} />
 
       {/* ✍️ Signup Modal */}
-      <Modal show={showSignup} onHide={() => setShowSignup(false)} centered>
+      <Modal show={showSignup} onHide={() => setShowSignup(false)} centered className="signup-modal-in-home-font">
         <Modal.Header closeButton>
           <Modal.Title>Create Your Account</Modal.Title>
         </Modal.Header>

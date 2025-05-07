@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap');
+
+.invoice-page-font {
+    font-family: "Gilda Display"; 
+}
+
+.custom-dropdown-menu {
+    border-radius: 12px;
+    padding: 0.5rem;
+    min-width: 150px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  .custom-dropdown-menu .dropdown-item {
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .custom-dropdown-menu .dropdown-item:hover {
+    background-color: #f0f0f0;
+  }
+  

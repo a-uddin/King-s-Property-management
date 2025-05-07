@@ -1,4 +1,9 @@
 /* Add this in Home.css or Login.css */
+@import url('https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap');
+
+.login-font-style{
+  font-family: "Gilda Display";
+}
 
 .modal-content {
     border-radius: 20px;

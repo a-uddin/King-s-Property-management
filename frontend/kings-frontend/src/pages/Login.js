@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
 import "./Login.css";
+import "./CommonTextDesign.css";
 
 const Login = ({ show, handleClose }) => {
   const [email, setEmail] = useState("");
@@ -12,6 +13,9 @@ const Login = ({ show, handleClose }) => {
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
+  const [showForgotModal, setShowForgotModal] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState("");
+  const [emailSent, setEmailSent] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -31,7 +35,8 @@ const Login = ({ show, handleClose }) => {
         handleClose();
         if (response.data.role === "admin") navigate("/admin");
         else if (response.data.role === "staff") navigate("/staff");
-        else if (response.data.role === "external_company") navigate("/external");
+        else if (response.data.role === "external_company")
+          navigate("/external");
 
         setSuccess("");
         setEmail("");
@@ -42,8 +47,18 @@ const Login = ({ show, handleClose }) => {
     }
   };
 
+  const handleForgotPassword = async () => {
+    try {
+      await axios.post("/api/users/forgot-password", { email: forgotEmail });
+      setEmailSent(true);
+    } catch (error) {
+      console.error("Reset error:", error);
+      alert("Something went wrong. Please try again.");
+    }
+  };
+
   return (
-    <Modal show={show} onHide={handleClose} centered className="modern-modal">
+    <Modal show={show} onHide={handleClose} centered className="modern-modal login-font-style">
       <Modal.Header closeButton>
         <Modal.Title>🔐 Member Login</Modal.Title>
       </Modal.Header>
@@ -73,6 +88,17 @@ const Login = ({ show, handleClose }) => {
               required
             />
           </Form.Group>
+          <p
+            onClick={() => setShowForgotModal(true)}
+            style={{
+              color: "blue",
+              cursor: "pointer",
+              fontSize: "0.9rem",
+              marginTop: "8px",
+            }}
+          >
+            Forgot Password?
+          </p>
 
           <div className="d-flex justify-content-end">
             <Button type="submit" variant="primary">
@@ -80,6 +106,50 @@ const Login = ({ show, handleClose }) => {
             </Button>
           </div>
         </Form>
+        <Modal
+          show={showForgotModal}
+          onHide={() => setShowForgotModal(false)}
+          centered
+          className="forgot-password-modal-font"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Reset Your Password</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {emailSent ? (
+              <p className="text-success">
+                ✅ If this email exists, a reset link has been sent.
+              </p>
+            ) : (
+              <>
+                <p>Enter your email and we'll send a password reset link.</p>
+                <Form.Control
+                  type="email"
+                  placeholder="Enter your email"
+                  value={forgotEmail}
+                  onChange={(e) => setForgotEmail(e.target.value)}
+                />
+              </>
+            )}
+          </Modal.Body>
+          {!emailSent && (
+            <Modal.Footer>
+              <Button
+                variant="secondary"
+                onClick={() => setShowForgotModal(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="primary"
+                onClick={handleForgotPassword}
+                disabled={!forgotEmail}
+              >
+                Send Reset Link
+              </Button>
+            </Modal.Footer>
+          )}
+        </Modal>
       </Modal.Body>
     </Modal>
   );

@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap');
+
+.home-font-style,
+.signup-modal-in-home-font {
+  font-family: "Gilda Display";
+}
+
 .home-background {
     background: linear-gradient(270deg, #74ebd5, #acb6e5, #ffecd2);
     background-size: 600% 600%;

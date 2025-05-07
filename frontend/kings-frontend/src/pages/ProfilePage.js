@@ -4,6 +4,7 @@ import { Form, Button, Alert, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import AdminNavbar from "../components/AdminNavbar";
 import { AuthContext } from "../context/AuthContext";
+import "./CommonTextDesign.css";
 
 const ProfilePage = () => {
   const { user } = useContext(AuthContext);
@@ -58,56 +59,62 @@ const ProfilePage = () => {
   return (
     <>
       <AdminNavbar />
-      <Container className="mt-4">
+      <Container className="mt-4 admin-profile-font">
         <h3>👤 Admin Profile</h3>
         {alert && <Alert variant={alert.type}>{alert.message}</Alert>}
 
         <Form onSubmit={handleUpdate}>
-          <Form.Group className="mb-3">
-            <Form.Label>First Name</Form.Label>
-            <Form.Control
-              name="firstName"
-              value={profile.firstName}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+          <div className="row justify-content-center">
+            <div className="col-md-6 shadow p-4 rounded bg-white">
+              <Form.Group className="mb-3">
+                <Form.Label>First Name</Form.Label>
+                <Form.Control
+                  name="firstName"
+                  value={profile.firstName}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Last Name</Form.Label>
-            <Form.Control
-              name="lastName"
-              value={profile.lastName}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control
+                  name="lastName"
+                  value={profile.lastName}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              name="email"
-              type="email"
-              value={profile.email}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  name="email"
+                  type="email"
+                  value={profile.email}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
 
-          <Form.Group className="mb-3">
-            <Form.Label>New Password (optional)</Form.Label>
-            <Form.Control
-              name="password"
-              type="password"
-              placeholder="••••••••"
-              value={profile.password}
-              onChange={handleChange}
-            />
-          </Form.Group>
+              <Form.Group className="mb-4">
+                <Form.Label>New Password (optional)</Form.Label>
+                <Form.Control
+                  name="password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={profile.password}
+                  onChange={handleChange}
+                />
+              </Form.Group>
 
-          <Button type="submit" variant="primary">
-            Save Changes
-          </Button>
+              <div className="text-end">
+                <Button type="submit" variant="primary">
+                  Save Changes
+                </Button>
+              </div>
+            </div>
+          </div>
         </Form>
       </Container>
     </>

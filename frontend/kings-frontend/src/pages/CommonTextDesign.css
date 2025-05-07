@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap');
+
+
+
+.AssignedTask-font-design,
+.ShowAsset-font-design,
+.upcoming-font-design,
+.approval-page-font-style,
+.admin-profile-font,
+.signup-font-style,
+.staffAssessment-font-style,
+.assessment-history-modal-font,
+.staffMaintenance-font-style,
+.restePassword-font-style,
+.forgot-password-modal-font,
+.footer-font-style  {
+    font-family: "Gilda Display";
+}
+
+
+.badge {
+    border-radius: 12px;
+    padding: 4px 10px;
+    font-size: 0.85rem;
+  }
+
+
+  /* ResetPassword page Stylish UI */
+
+.restePassword-font-style {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: linear-gradient(135deg, #f2f6fa, #e6ecf1);
+    min-height: 100vh;
+    align-items: center;
+  }
+
+  .restePassword-font-style .card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    background-color: #ffffff;
+    transition: transform 0.3s ease;
+  }
+
+  .restePassword-font-style .card:hover {
+    transform: translateY(-4px);
+  }
+
+  .restePassword-font-style h4 {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+  }
+
+  .restePassword-font-style .form-label {
+    font-weight: 500;
+    color: #34495e;
+  }
+
+  .restePassword-font-style .form-control {
+    border-radius: 10px;
+    border: 1px solid #ced4da;
+    transition: border-color 0.3s ease;
+  }
+
+  .restePassword-font-style .form-control:focus {
+    border-color: #4c5abf;
+    box-shadow: 0 0 0 0.15rem rgba(76, 90, 191, 0.25);
+  }
+
+  .restePassword-font-style .btn-primary {
+    background-color: #4c5abf;
+    border-color: #4c5abf;
+    border-radius: 10px;
+    font-weight: 500;
+  }
+
+  .restePassword-font-style .btn-primary:hover {
+    background-color: #3a49a0;
+    border-color: #3a49a0;
+  }
+
+  .restePassword-font-style .btn-outline-secondary {
+    border-radius: 10px;
+    font-weight: 500;
+  }
+
+  .restePassword-font-style a {
+    color: #4c5abf;
+    font-weight: 500;
+  }
+
+

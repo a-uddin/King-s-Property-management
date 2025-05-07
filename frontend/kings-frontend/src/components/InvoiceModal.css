@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap');
 
-.font-design {
+.historyModal-font,
+.submitModal-font {
     font-family: "Gilda Display";
-    
 }

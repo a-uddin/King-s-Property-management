@@ -25,7 +25,7 @@ const AdminNavbar = ({ logout }) => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand href="/admin">Kings Admin</Navbar.Brand>
+        <Navbar.Brand href="/admin" className="brand-font">King's Admin</Navbar.Brand>
         <Navbar.Toggle aria-controls="admin-navbar-nav" />
         <Navbar.Collapse id="admin-navbar-nav">
           <Nav className="me-auto">
@@ -33,7 +33,9 @@ const AdminNavbar = ({ logout }) => {
               Pending Approval
             </Nav.Link>
 
-            <Nav.Link as={Link} to="/admin/all-members">All Members</Nav.Link>
+            <Nav.Link as={Link} to="/admin/all-members">
+              All Members
+            </Nav.Link>
 
             <Nav.Link as={Link} to="/admin/assets">
               Show Asset
@@ -43,12 +45,16 @@ const AdminNavbar = ({ logout }) => {
             <Nav.Link as={Link} to="/admin/upcoming-maintenance">
               Upcoming Maintenance
             </Nav.Link>
-            <Nav.Link as={Link} to="/admin/all-maintenance">
+            {/*    <Nav.Link as={Link} to="/admin/all-maintenance">
               Maintenance History
+            </Nav.Link>*/}
+            <Nav.Link href="/assign-task">Assigned Task</Nav.Link>
+            <Nav.Link as={Link} to="/assessments">
+              All Assessments
             </Nav.Link>
-
-            <Nav.Link href="/assign-task">Assign Task</Nav.Link>
-            <Nav.Link href="/assessments">All Assessments</Nav.Link>
+            <Nav.Link as={Link} to="/admin/invoices">
+              All Invoices
+            </Nav.Link>
           </Nav>
 
           <Dropdown className="ms-3">

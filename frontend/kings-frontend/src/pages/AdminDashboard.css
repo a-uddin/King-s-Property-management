@@ -1,4 +1,9 @@
 /* Full-page container */
+
+@import url('https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap');
+
+
+
 .admin-dashboard {
     min-height: 100vh;
     display: flex;

@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap'); 
+
+
+
+.maintenance-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background-color: white;
+  }
+
+  .maintenance-table tr:hover {
+    background-color: #cfe5fa;
+    transition: background 0.3s ease;
+  }
+  
+  
+  .maintenance-table thead {
+    background-color: #f2f4f8;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  .maintenance-table th,
+  .maintenance-table td {
+    padding: 12px 8px 12px 4px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .maintenance-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .maintenance-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    font-size: 12px;
+    border-radius: 999px;
+    color: white;
+  }
+  
+  .priority-low {
+    background-color: #6c757d;
+  }
+  .priority-medium {
+    background-color: #ffc107;
+  }
+  .priority-high {
+    background-color: #dc3545;
+  }
+  
+  .status-ongoing {
+    background-color: #0d6efd;
+  }
+  .status-paused {
+    background-color: #6c757d;
+  }
+  .status-review {
+    background-color: #198754;
+  }
+  .status-completed {
+    background-color: #20c997;
+  }
+  .status-canceled {
+    background-color: #dc3545;
+  }
+  
+  .assigned-to:hover::after {
+    content: attr(data-email);
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    font-size: 12px;
+    padding: 5px;
+    border-radius: 4px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+  
+  .Ongoing-font-design {
+    font-family: "Gilda Display";
+   
+}

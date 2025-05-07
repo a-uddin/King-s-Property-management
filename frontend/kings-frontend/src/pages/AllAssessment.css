@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap');
+
+.assessment-font-style,
+.modal-font {
+    font-family: "Gilda Display";
+}
+
+td, th {
+    padding: 1.5rem 1.5rem;
+  }
+  
+  .table-font-balance td,
+  .table-font-balance th {
+    padding: 12px 14px !important;
+    font-size: 14px !important;
+  }
+  

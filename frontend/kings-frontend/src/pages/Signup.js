@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Form, Button, Alert } from "react-bootstrap";
+import "./CommonTextDesign.css";
 
 const Signup = ({ onSuccess }) => {
   const [firstName, setFirstName] = useState("");
@@ -51,8 +52,8 @@ const Signup = ({ onSuccess }) => {
   };
 
   return (
-    <div>
-      <h4 className="text-center mb-3">📝 External Company Signup</h4>
+    <div className="signup-font-style">
+      <h4 className="text-center mb-3">📝 Signup</h4>
       {message && (
         <Alert variant={message.includes("failed") ? "danger" : "success"}>{message}</Alert>
       )}

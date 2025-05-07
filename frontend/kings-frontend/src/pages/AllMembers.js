@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import EmailModal from "../components/EmailModal";
 import { Table, Button } from "react-bootstrap";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
+
 import AdminNavbar from "../components/AdminNavbar";
 import ViewUserModal from "../components/ViewUserModal";
 import EditUserModal from "../components/EditUserModal";
 import "./AllMembers.css";
-
-
+import Footer from "../components/Footer";
 
 const AllMembers = () => {
   const [members, setMembers] = useState([]);
@@ -19,8 +21,6 @@ const AllMembers = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
   const [editUser, setEditUser] = useState(null);
-
-
 
   useEffect(() => {
     fetchMembers();
@@ -48,7 +48,7 @@ const AllMembers = () => {
       const token = localStorage.getItem("token");
       await axios.post(
         "/api/email/send",
-        { to, subject, message },   //sending email is handled by backend/routes/emails.js
+        { to, subject, message }, //sending email is handled by backend/routes/emails.js
         { headers: { Authorization: `Bearer ${token}` } }
       );
       alert("✅ Email sent successfully!");
@@ -60,17 +60,46 @@ const AllMembers = () => {
   };
 
   const handleDelete = async (userId) => {
-    if (!window.confirm("Are you sure you want to delete this user?")) return;
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "This user will be permanently deleted.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#6c757d",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (!confirm.isConfirmed) return;
+
     try {
       const token = localStorage.getItem("token");
       await axios.delete(`/api/all-members/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      fetchMembers(); // Refresh list
-      alert("✅ User deleted successfully");
+
+      fetchMembers();
+
+      Swal.fire({
+        icon: "success",
+        title: "Deleted!",
+        text: "User has been removed.",
+        position: "top",
+        toast: true,
+        timer: 2000,
+        showConfirmButton: false,
+      });
     } catch (error) {
       console.error("Delete failed", error);
-      alert("❌ Failed to delete user");
+      Swal.fire({
+        icon: "error",
+        title: "Failed",
+        text: "Could not delete user.",
+        position: "top",
+        toast: true,
+        timer: 2000,
+        showConfirmButton: false,
+      });
     }
   };
 
@@ -107,14 +136,12 @@ const AllMembers = () => {
       role.includes(searchTerm.toLowerCase())
     );
   });
-  
-  
 
   return (
     <>
       <AdminNavbar />
 
-      <div className="container mt-5 font-styl">
+      <div className="container mt-5 mb-5 font-styl">
         <h2>👥 All Members</h2>
 
         <div className="mb-3 mt-4 d-flex justify-content-end">
@@ -139,24 +166,21 @@ const AllMembers = () => {
               <th>✏️🗑️👁️ Actions</th>
             </tr>
           </thead>
-
-
-
           <tbody className="text-center">
             {filteredMembers.length > 0 ? (
               filteredMembers.map((user, index) => (
                 <tr key={user._id}>
                   <td>{index + 1}</td>
-                  <td className="text-capitalize">
+                  <td className="text-capitalize text-start">
                     {user.firstName} {user.lastName}
                   </td>
-                  <td>
+                  <td className="text-start">
                     <a href={`mailto:${user.email}`}>{user.email}</a>
                   </td>
-                  <td className="text-capitalize">
+                  <td className="text-capitalize text-start">
                     <span className="badge bg-info text-dark">{user.role}</span>
                   </td>
-                  <td>
+                  <td className="text-start">
                     <span className="badge bg-success">Approved</span>
                   </td>
                   <td>
@@ -224,6 +248,7 @@ const AllMembers = () => {
         user={editUser}
         onSave={handleSaveChanges}
       />
+      <Footer />
     </>
   );
 };

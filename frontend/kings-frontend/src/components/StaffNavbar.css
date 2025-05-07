@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Italiana&display=swap');
+
+.brand-font {
+  font-family: "Italiana", sans-serif;
+  color: white;
+  font-weight: bold;
+  padding-right: 20px;
+}
+
+.avatar-circle {
+    background-color: #6c757d;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+  
+  .profile-toggle {
+    background-color: #0d6efd !important;
+    border: none !important;
+  }
+  
+  .dropdown-fade {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .dropdown-item-custom {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .text-purple {
+    color: #6f42c1;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
