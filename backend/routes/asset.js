@@ -3,6 +3,9 @@ const router = express.Router();
 const Asset = require("../models/Asset");
 const User = require("../models/User");
 const sendEmail = require("../utils/sendEmail");
+const AssignedTask = require("../models/AssignedTask");
+const OngoingMaintenance = require('../models/OngoingMaintenance');
+
 
 // GET all assets
 router.get("/", async (req, res) => {
@@ -43,6 +46,17 @@ router.post("/", async (req, res) => {
     });
 
     await newAsset.save();
+
+    // 🛠️ Auto-create Assigned Task for new asset
+    // it means from Asset page it will sync to Assigned Task page
+    await AssignedTask.create({
+      assetName: newAsset.assetName,
+      assetType: newAsset.assetType,
+      location: newAsset.location,
+      assignedTo: newAsset.assignedTo || null, // optional
+      note: "-", // default note
+      taskStatus: "Pending", // default status
+    });
 
     // 🔔 Send email to assigned user
     if (assignedTo) {
@@ -114,13 +128,25 @@ router.put("/:id", async (req, res) => {
 // DELETE asset
 router.delete("/:id", async (req, res) => {
   try {
-    await Asset.findByIdAndDelete(req.params.id);
-    res.json({ message: "Asset deleted successfully" });
+    const deletedAsset = await Asset.findByIdAndDelete(req.params.id);
+
+    if (!deletedAsset) {
+      return res.status(404).json({ message: "Asset not found" });
+    }
+
+    // 🛠️ Also delete assigned tasks related to this asset
+    await AssignedTask.deleteMany({ assetName: deletedAsset.assetName });
+
+    await OngoingMaintenance.deleteMany({ assetName: deletedAsset.assetName });
+
+
+    res.json({ message: "Asset and related assigned tasks deleted successfully" });
+
   } catch (err) {
+    console.error("Error deleting asset:", err);
     res.status(500).json({ error: "Failed to delete asset" });
   }
 });
-
 
 
 // ✅ Assign asset to user AND send email
@@ -134,6 +160,15 @@ router.put('/:id/assign', async (req, res) => {
       { assignedTo },
       { new: true }
     );
+
+    // 🛠 Also update matching assigned task
+if (asset && asset.assetName) {
+  await AssignedTask.findOneAndUpdate(
+    { assetName: asset.assetName },
+    { assignedTo },
+    { new: true }
+  );
+}
 
     const user = await User.findById(assignedTo);
 
@@ -162,7 +197,23 @@ router.put('/:id/assign', async (req, res) => {
 });
 
   
-  
+// New Route to fetch all assets with assigned info
+// This Api is for Assigned Task page. 
+// with this Api it is featching all asset for Assigned task page
+
+router.get("/assigned-tasks", async (req, res) => {
+  try {
+    const assets = await Asset.find()
+      .populate("assignedTo", "firstName lastName email")
+      .sort({ createdAt: -1 });
+
+    res.json(assets);
+  } catch (error) {
+    console.error("Error fetching assigned tasks:", error);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
   
   
 

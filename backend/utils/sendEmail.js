@@ -2,7 +2,7 @@
 
 const nodemailer = require('nodemailer');
 
-const sendEmail = async ({ to, subject, text }) => {
+const sendEmail = async ({ to, subject, text, html }) => {
   try {
     // ✅ Sanity check before sending
     if (!to || typeof to !== 'string' || to.trim() === '') {
@@ -22,7 +22,9 @@ const sendEmail = async ({ to, subject, text }) => {
       from: `"King's Admin" <${process.env.EMAIL_USER}>`,
       to: to.trim(),
       subject,
-      text,
+      //text,
+        // ✅ Prefer HTML if provided, else fallback to plain text
+      ...(html ? { html } : { text }),
     };
 
     await transporter.sendMail(mailOptions);

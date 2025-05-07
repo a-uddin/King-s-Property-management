@@ -3,6 +3,7 @@ const router = express.Router();
 const Asset = require("../models/Asset");
 const MaintenanceTask = require("../models/MaintenanceTask");
 const nodemailer = require("nodemailer");
+const OngoingMaintenance = require('../models/OngoingMaintenance');
 
 // Fetch upcoming maintenance tasks (based on scheduledMaintenance date in the future)
 router.get("/upcoming-maintenance", async (req, res) => {
@@ -107,6 +108,73 @@ router.get("/logs", async (req, res) => {
       res.status(500).json({ message: "Server error" });
     }
   });
-  
+
+  // GET all ongoing maintenance
+router.get('/ongoing-maintenance', async (req, res) => {
+  try {
+    const records = await OngoingMaintenance.find()
+      .populate('assignedTo', 'firstName lastName role email') 
+      .sort({ updatedAt: -1 });
+    res.json(records);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch ongoing maintenance tasks.' });
+  }
+});
+
+
+// GET all ongoing maintenacne 
+router.get("/ongoing-maintenance/by-assigned-task/:assignedTaskId", async (req, res) => {
+  try {
+    const assignedTaskId = req.params.assignedTaskId;
+
+    // Find the assigned task to extract key fields
+    const assignedTask = await require("../models/AssignedTask").findById(assignedTaskId);
+    if (!assignedTask) return res.status(404).json({ message: "Assigned task not found" });
+
+    // Now find the matching ongoingmaintenance entry
+    const ongoing = await require("../models/OngoingMaintenance").findOne({
+      assetName: assignedTask.assetName,
+      assetType: assignedTask.assetType,
+      location: assignedTask.location,
+      assignedTo: assignedTask.assignedTo,
+      task: assignedTask.note,
+    });
+
+    if (!ongoing) return res.status(404).json({ message: "Ongoing maintenance not found" });
+
+    res.json(ongoing);
+  } catch (err) {
+    console.error("Error finding ongoing maintenance by task:", err.message);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+
+// PATCH update status or priority or estimatedCompletion
+router.patch('/ongoing-maintenance/:id', async (req, res) => {
+  try {
+    const updateFields = {};
+
+    if (req.body.status) updateFields.status = req.body.status;
+    if (req.body.priority) updateFields.priority = req.body.priority;
+    if (req.body.estimatedCompletion) updateFields.estimatedCompletion = req.body.estimatedCompletion;
+
+    updateFields.updatedAt = new Date();
+
+    const result = await OngoingMaintenance.findByIdAndUpdate(
+      req.params.id,
+      { $set: updateFields },
+      { new: true }
+    );
+
+    if (!result) return res.status(404).json({ message: 'Maintenance task not found' });
+
+    res.json({ message: 'Updated successfully', data: result });
+  } catch (err) {
+    console.error('Update Error:', err.message);
+    res.status(500).json({ message: 'Failed to update maintenance task' });
+  }
+});
 
 module.exports = router;

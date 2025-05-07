@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const nodemailer = require("nodemailer");
-const { expressjwt: jwt } = require("express-jwt");
+const { expressjwt } = require("express-jwt"); // keep this for middleware use
+const jwt = require("jsonwebtoken"); // ✅ this is for signing tokens
 const sendEmail = require("../utils/sendEmail");
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
@@ -15,7 +16,7 @@ const requireAuth = require("../middleware/requireAuth");
   algorithms: ["HS256"],
 });
  */
-// ✅ Pending approval route (existing - keep as-is)
+// ✅ Pending approval route 
 router.get("/pending", async (req, res) => {
   try {
     const pendingUsers = await User.find({ approved: false });
@@ -137,4 +138,77 @@ router.patch("/profile/update", requireAuth, async (req, res) => {
   }
 });
 
+
+
+// POST /api/auth/forgot-password
+router.post("/forgot-password", async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      // Do not reveal if user exists for security reasons
+      return res.status(200).json({ message: "If this email exists, a reset link has been sent." });
+    }
+
+    // Create JWT token (valid for 15 minutes)
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "15m" }
+    );
+
+    const resetLink = `http://localhost:3000/reset-password/${token}`; // 🔁 change to your real frontend domain
+    console.log("Reset email will be sent to:", user.email);
+
+    const html = `
+    <p>Click the button below to reset your password:</p>
+    <a href="${resetLink}" 
+       style="display: inline-block; padding: 10px 20px; background-color: #007BFF; color: white; 
+              text-decoration: none; border-radius: 5px; font-weight: bold;"
+       onmouseover="this.style.backgroundColor='#0056b3';" 
+       onmouseout="this.style.backgroundColor='#007BFF';">
+      Reset Password
+    </a>
+    <p>This link expires in 15 minutes.</p>
+  `;
+
+    // Send email
+    await sendEmail({
+      to: user.email,
+      subject: "Reset Your Password",
+      html, // ✅ now html is defined
+    });
+
+    res.status(200).json({ message: "Reset link sent" });
+
+  } catch (err) {
+    console.error("Forgot Password Error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+// ✅ POST /api/auth/reset-password
+router.post("/reset-password", async (req, res) => {
+  const { token, password } = req.body;
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.userId;
+
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(password, salt);
+    await user.save();
+
+    res.status(200).json({ message: "Password reset successful" });
+
+  } catch (err) {
+    console.error("Reset token error:", err);
+    res.status(400).json({ message: "Invalid or expired token" });
+  }
+});
 module.exports = router;
