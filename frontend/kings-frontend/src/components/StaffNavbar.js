@@ -50,18 +50,12 @@ const StaffNavbar = () => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu className="dropdown-fade">
-              <Dropdown.Item
-                as={Link}
-                to="/staff/profile"
-                className="dropdown-item-custom"
-              >
+              <Dropdown.Item as={Link} to="/staff/profile" className="dropdown-item-custom">
                 <FaUser className="me-2 text-purple" />
                 Profile
               </Dropdown.Item>
-              <Dropdown.Item
-                onClick={handleLogout}
-                className="dropdown-item-custom text-danger"
-              >
+
+              <Dropdown.Item onClick={handleLogout} className="dropdown-item-custom text-danger">
                 <FaSignOutAlt className="me-2" />
                 Logout
               </Dropdown.Item>

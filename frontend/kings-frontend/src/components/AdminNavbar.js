@@ -65,14 +65,14 @@ const AdminNavbar = ({ logout }) => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu className="dropdown-fade">
-            <Dropdown.Item as={Link} to="/admin/profile">Profile</Dropdown.Item>
-              <Dropdown.Item
-                onClick={handleLogout}
-                className="dropdown-item-custom text-danger"
-              >
-                <FaSignOutAlt className="me-2" />
-                Logout
-              </Dropdown.Item>
+                <Dropdown.Item as={Link} to="/admin/profile" className="dropdown-item-custom">
+                  <FaUser className="me-2 text-purple" />
+                    Profile
+                </Dropdown.Item>
+                <Dropdown.Item onClick={handleLogout} className="dropdown-item-custom text-danger">
+                  <FaSignOutAlt className="me-2" />
+                  Logout
+                </Dropdown.Item>
               <Dropdown.Divider />
             </Dropdown.Menu>
           </Dropdown>
