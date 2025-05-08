@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import Dropdown from "react-bootstrap/Dropdown";
 import { FaUser, FaSignOutAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import "./StaffNavbar.css";
 
 
@@ -23,14 +24,21 @@ const StaffNavbar = () => {
   return (
     <Navbar bg="secondary" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand href="/" className="brand-font">King's Staff</Navbar.Brand>
+        <Navbar.Brand href="/" className="brand-font">
+          King's Staff
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="staff-navbar-nav" />
         <Navbar.Collapse id="staff-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/staff">Home</Nav.Link>
-            {/* <Nav.Link href="/staff/my-task">My Tasks</Nav.Link> */}
-            <Nav.Link href="/staff/maintenance">Maintenance</Nav.Link>
-            <Nav.Link href="/staff/assessments">Assessments</Nav.Link>
+            <Nav.Link as={Link} to="/staff">
+              Home
+            </Nav.Link>
+            <Nav.Link as={Link} to="/staff/maintenance">
+              Maintenance
+            </Nav.Link>
+            <Nav.Link as={Link} to="/staff/assessments">
+              Assessments
+            </Nav.Link>
           </Nav>
           <Dropdown className="ms-3">
             <Dropdown.Toggle
@@ -43,7 +51,8 @@ const StaffNavbar = () => {
 
             <Dropdown.Menu className="dropdown-fade">
               <Dropdown.Item
-                href="/staff/profile"
+                as={Link}
+                to="/staff/profile"
                 className="dropdown-item-custom"
               >
                 <FaUser className="me-2 text-purple" />

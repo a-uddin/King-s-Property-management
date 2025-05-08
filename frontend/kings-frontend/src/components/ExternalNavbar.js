@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Navbar, Nav, Container, Dropdown } from "react-bootstrap";
 import { AuthContext } from "../context/AuthContext";
 import { FaUser, FaSignOutAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import "./StaffNavbar.css"; // ✅ reuse the same styles
 
 const ExternalNavbar = () => {
@@ -16,13 +17,17 @@ const ExternalNavbar = () => {
   return (
     <Navbar bg="secondary" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand href="/" className="brand-font">🏢 King's Portal - External</Navbar.Brand>
+        <Navbar.Brand href="/" className="brand-font">
+          🏢 King's Portal - External
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="external-navbar" />
         <Navbar.Collapse id="external-navbar">
           <Nav className="me-auto">
             {/* <Nav.Link href="/external">Home</Nav.Link> */}
             {/* <Nav.Link href="/external/tasks">Assigned Tasks</Nav.Link> */}
-            <Nav.Link href="/external/maintenance">Maintenance Task</Nav.Link>
+            <Nav.Link as={Link} to="/external/maintenance">
+              Maintenance Task
+            </Nav.Link>
             {/* <Nav.Link href="/external/invoice">Submit Invoice</Nav.Link> */}
           </Nav>
 
@@ -36,11 +41,26 @@ const ExternalNavbar = () => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu className="dropdown-fade">
-              <Dropdown.Item href="/external/profile" className="dropdown-item-custom">
+              <Dropdown.Item
+                as={Link}
+                to="/external/profile"
+                className="dropdown-item-custom"
+              >
+                <Dropdown.Item
+                  as={Link}
+                  to="/external/profile"
+                  className="dropdown-item-custom"
+                >
+                      <Dropdown.Item
+                as={Link}
+                to="/staff/profile"
+                className="dropdown-item-custom"
+              >
                 <FaUser className="me-2 text-purple" />
                 Profile
               </Dropdown.Item>
-              <Dropdown.Item onClick={handleLogout} className="dropdown-item-custom text-danger">
+                  Profile
+                </Dropdown.Item>
                 <FaSignOutAlt className="me-2" />
                 Logout
               </Dropdown.Item>

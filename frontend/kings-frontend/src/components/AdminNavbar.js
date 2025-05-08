@@ -29,9 +29,7 @@ const AdminNavbar = ({ logout }) => {
         <Navbar.Toggle aria-controls="admin-navbar-nav" />
         <Navbar.Collapse id="admin-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/admin/pending-approval" className="nav-link">
-              Pending Approval
-            </Nav.Link>
+          <Nav.Link as={Link} to="/admin/pending-approval">Pending Approval</Nav.Link>
 
             <Nav.Link as={Link} to="/admin/all-members">
               All Members
@@ -41,14 +39,14 @@ const AdminNavbar = ({ logout }) => {
               Show Asset
             </Nav.Link>
 
-            <Nav.Link href="/maintenance/ongoing">Ongoing Maintenance</Nav.Link>
+            <Nav.Link as={Link} to="/maintenance/ongoing">Ongoing Maintenance</Nav.Link>
             <Nav.Link as={Link} to="/admin/upcoming-maintenance">
               Upcoming Maintenance
             </Nav.Link>
             {/*    <Nav.Link as={Link} to="/admin/all-maintenance">
               Maintenance History
             </Nav.Link>*/}
-            <Nav.Link href="/assign-task">Assigned Task</Nav.Link>
+            <Nav.Link as={Link} to="/assign-task">Assigned Task</Nav.Link>
             <Nav.Link as={Link} to="/assessments">
               All Assessments
             </Nav.Link>
@@ -67,13 +65,7 @@ const AdminNavbar = ({ logout }) => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu className="dropdown-fade">
-              <Dropdown.Item
-                href="/admin/profile"
-                className="dropdown-item-custom"
-              >
-                <FaUser className="me-2 text-purple" />
-                Profile
-              </Dropdown.Item>
+            <Dropdown.Item as={Link} to="/admin/profile">Profile</Dropdown.Item>
               <Dropdown.Item
                 onClick={handleLogout}
                 className="dropdown-item-custom text-danger"
