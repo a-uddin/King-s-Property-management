@@ -24,9 +24,7 @@ const StaffNavbar = () => {
   return (
     <Navbar bg="secondary" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand href="/" className="brand-font">
-          King's Staff
-        </Navbar.Brand>
+      <Navbar.Brand as={Link} to="/" className="brand-font">King's Staff</Navbar.Brand>
         <Navbar.Toggle aria-controls="staff-navbar-nav" />
         <Navbar.Collapse id="staff-navbar-nav">
           <Nav className="me-auto">

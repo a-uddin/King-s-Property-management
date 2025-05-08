@@ -25,7 +25,7 @@ const AdminNavbar = ({ logout }) => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand href="/admin" className="brand-font">King's Admin</Navbar.Brand>
+      <Navbar.Brand as={Link} to="/admin" className="brand-font">King's Admin</Navbar.Brand>
         <Navbar.Toggle aria-controls="admin-navbar-nav" />
         <Navbar.Collapse id="admin-navbar-nav">
           <Nav className="me-auto">

@@ -17,9 +17,7 @@ const ExternalNavbar = () => {
   return (
     <Navbar bg="secondary" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand href="/" className="brand-font">
-          🏢 King's Portal - External
-        </Navbar.Brand>
+      <Navbar.Brand as={Link} to="/" className="brand-font">🏢 King's Portal - External</Navbar.Brand>
         <Navbar.Toggle aria-controls="external-navbar" />
         <Navbar.Collapse id="external-navbar">
           <Nav className="me-auto">
