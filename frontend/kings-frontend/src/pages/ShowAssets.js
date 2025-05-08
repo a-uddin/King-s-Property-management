@@ -243,6 +243,7 @@ const ShowAssets = () => {
             <Table striped bordered hover>
               <thead>
                 <tr>
+                  <th>#</th>
                   <th>Name</th>
                   <th>Type</th>
                   <th>Location</th>
@@ -264,8 +265,9 @@ const ShowAssets = () => {
                       asset.status.toLowerCase().includes(query)
                     );
                   })
-                  .map((asset) => (
+                  .map((asset, index) => (
                     <tr key={asset._id}>
+                      <td>{index + 1}</td>
                       <td>{asset.assetName}</td>
                       <td>
                         {asset.assetType.charAt(0).toUpperCase() +
