@@ -300,6 +300,7 @@ const ShowAssets = () => {
 
                       <td>{asset.scheduledMaintenance?.slice(0, 10)}</td>
                       <td>
+                      <div className="d-flex gap-1">
                         <Button
                           size="sm"
                           variant="warning"
@@ -314,6 +315,7 @@ const ShowAssets = () => {
                         >
                           Delete
                         </Button>
+                        </div>
                       </td>
                     </tr>
                   ))}
