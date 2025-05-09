@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: kings-property-management
+    staticPublishPath: frontend/kings-frontend/build
+    buildCommand: npm install && npm run build
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
