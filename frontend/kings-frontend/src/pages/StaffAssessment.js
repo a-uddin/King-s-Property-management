@@ -212,6 +212,7 @@ const StaffAssessment = () => {
               >
                 <thead>
                   <tr>
+                    <th>#</th>
                     <th>Asset</th>
                     <th>Location</th>
                     <th>Purchase Date</th>
@@ -233,8 +234,9 @@ const StaffAssessment = () => {
                           ?.toLowerCase()
                           .includes(searchTerm.toLowerCase())
                     )
-                    .map((asset) => (
+                    .map((asset, index) => (
                       <tr key={asset.assetID}>
+                        <td>{index + 1}</td>
                         <td>{asset.assetName}</td>
                         <td>{asset.location}</td>
                         <td>
