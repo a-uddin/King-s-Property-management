@@ -2,6 +2,7 @@
   "name": "kings-frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://king-s-property-management.onrender.com",
   "proxy": "http://localhost:5000",
   "dependencies": {
     "@auth0/auth0-react": "^2.3.0",
