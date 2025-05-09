@@ -43,7 +43,7 @@ const UpcomingMaintenance = () => {
 
   const handleSave = async (assetId) => {
     const { maintenanceType, maintenanceNotes } = formData[assetId] || {};
-  
+
     if (!maintenanceType) {
       return Swal.fire({
         icon: "warning",
@@ -52,7 +52,7 @@ const UpcomingMaintenance = () => {
         confirmButtonColor: "#d33",
       });
     }
-  
+
     const confirm = await Swal.fire({
       title: "Confirm Save",
       text: "Are you sure you want to save this maintenance task?",
@@ -76,7 +76,6 @@ const UpcomingMaintenance = () => {
           maintenanceNotes,
         }
       );
-
 
       setFormData((prev) => ({ ...prev, [assetId]: {} }));
 
@@ -199,6 +198,7 @@ const UpcomingMaintenance = () => {
         <Table striped bordered hover responsive>
           <thead>
             <tr>
+              <th>#</th>
               <th>Asset Name</th>
               <th>Location</th>
               <th>Status</th>
@@ -217,13 +217,14 @@ const UpcomingMaintenance = () => {
                 </td>
               </tr>
             ) : (
-              filteredAssets.map((asset) => (
+              filteredAssets.map((asset, index) => (
                 <tr
                   key={asset._id}
                   className={
                     isDueSoon(asset.scheduledMaintenance) ? "table-warning" : ""
                   }
                 >
+                  <td>{index + 1}</td>
                   <td>{asset.assetName}</td>
                   <td>{asset.location}</td>
                   <td>{asset.status}</td>
