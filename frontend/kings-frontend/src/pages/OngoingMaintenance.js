@@ -113,6 +113,7 @@ const OngoingMaintenance = () => {
               <table className="table table-bordered table-hover align-middle">
                 <thead className="table-light">
                   <tr>
+                    <th>#</th>
                     <th>Asset Name</th>
                     <th>Type</th>
                     <th>Location</th>
@@ -125,8 +126,9 @@ const OngoingMaintenance = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredData.map((item) => (
+                  {filteredData.map((item, index) => (
                     <tr key={item._id}>
+                      <td>{index + 1}</td>
                       <td className="text-nowrap">{item.assetName}</td>
                       <td>{item.assetType}</td>
                       <td>{item.location}</td>
