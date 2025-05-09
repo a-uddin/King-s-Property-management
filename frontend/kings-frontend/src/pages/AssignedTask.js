@@ -240,6 +240,7 @@ const AssignedTask = () => {
               <table className="table table-striped table-bordered">
                 <thead className="thead-dark">
                   <tr>
+                    <th>#</th>
                     <th>Asset Name</th>
                     <th>Type</th>
                     <th>Location</th>
@@ -252,9 +253,10 @@ const AssignedTask = () => {
                 </thead>
                 <tbody>
                   {filteredTasks.length > 0 ? (
-                    filteredTasks.map((task) => {
+                    filteredTasks.map((task, index) => {
                       return (
                         <tr key={task._id}>
+                          <td>{index + 1}</td>
                           <td>{task.assetName || "No Name"}</td>
                           <td>{task.assetType || "No Type"}</td>
                           <td>{task.location || "No Location"}</td>
