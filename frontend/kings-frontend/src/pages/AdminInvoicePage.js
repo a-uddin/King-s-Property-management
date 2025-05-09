@@ -95,6 +95,7 @@ const AdminInvoicePage = () => {
           <Table striped bordered hover>
             <thead>
               <tr>
+                <th>#</th>
                 <th>File Name</th>
                 <th>Submitted By</th>
                 <th>Asset Name</th>
@@ -120,8 +121,9 @@ const AdminInvoicePage = () => {
                       .toLowerCase()
                       .includes(searchTerm.toLowerCase())
                 )
-                .map((inv) => (
+                .map((inv, index) => (
                   <tr key={inv._id}>
+                    <td>{index + 1}</td>
                     <td>{inv.fileName}</td>
                     <td>
                       {inv.submittedBy?.firstName} {inv.submittedBy?.lastName}

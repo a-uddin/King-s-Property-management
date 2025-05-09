@@ -23,7 +23,15 @@ const invoiceRoutes = require("./routes/invoice");
 const app = express();
 
 // Middleware
-app.use(cors());
+const corsOptions = {
+  origin: 'https://king-s-property-management.onrender.com',
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 
 // API Routes
