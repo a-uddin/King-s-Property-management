@@ -4,7 +4,7 @@
 # Ignore cache and pack files
 frontend/kings-frontend/node_modules/
 
-
+.env
 # Build artifacts
 **/build/
 **/dist/
