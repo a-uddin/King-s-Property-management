@@ -1,3 +1,4 @@
+// This is only for Admin invoice page.
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Table, Button, Dropdown } from "react-bootstrap";
