@@ -139,7 +139,6 @@ const AssignedTask = () => {
             },
           }
         );
-        
         alert("Task assigned successfully!");
       }
     } catch (error) {
@@ -228,7 +227,7 @@ const AssignedTask = () => {
             <div className="mb-3">
               <input
                 type="text"
-                placeholder="🔍 Search asset or assignee..."
+                placeholder="🔍 Search asset, type, location or assignee..."
                 className="form-control px-3 py-2 border border-gray-300 rounded-md mb-4 w-full text-base shadow-sm"
                 value={searchQuery}
                 style={{ width: "500px", maxWidth: "100%" }}
