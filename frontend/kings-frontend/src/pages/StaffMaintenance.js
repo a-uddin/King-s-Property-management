@@ -301,6 +301,7 @@ const MyTask = () => {
                   >
                     <thead className="table-light">
                       <tr>
+                        <th>#</th>
                         <th>Asset Name</th>
                         <th>Type</th>
                         <th>Location</th>
@@ -324,8 +325,9 @@ const MyTask = () => {
                               ?.toLowerCase()
                               .includes(searchTerm.toLowerCase())
                         )
-                        .map((task) => (
+                        .map((task, index) => (
                           <tr key={task._id}>
+                            <td>{index + 1}</td>
                             <td>{task.assetName}</td>
                             <td>{task.assetType}</td>
                             <td>{task.location}</td>
