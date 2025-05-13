@@ -11,12 +11,8 @@ const userSchema = new mongoose.Schema({
 
   // Company info (optional for staff, used for external companies)
   companyName: { type: String, default: null },
-  //businessLicense: { type: String, default: null },
   companyRegNo: { type: String, default: null },
-  //companyEmail: { type: String, default: null },
-  //companyPhone: { type: String, default: null },
-  //companyAddress: { type: String, default: null },
-
+ 
   // Admin control
   role: {
     type: String,
@@ -32,3 +28,5 @@ const userSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('User', userSchema);
+
+

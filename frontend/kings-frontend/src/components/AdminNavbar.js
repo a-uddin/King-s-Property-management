@@ -23,7 +23,7 @@ const AdminNavbar = ({ logout }) => {
   };
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar bg="dark" variant="dark" expand="lg" className="sticky-top">
       <Container>
       <Navbar.Brand as={Link} to="/admin" className="brand-font">King's Admin</Navbar.Brand>
         <Navbar.Toggle aria-controls="admin-navbar-nav" />

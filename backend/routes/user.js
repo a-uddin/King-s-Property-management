@@ -158,7 +158,7 @@ router.post("/forgot-password", async (req, res) => {
       { expiresIn: "15m" }
     );
 
-    const resetLink = `http://localhost:3000/reset-password/${token}`; // 🔁 change to your real frontend domain
+    const resetLink = `https://king-s-property-management.onrender.com/reset-password/${token}`; // 🔁  real frontend domain here!!!
     console.log("Reset email will be sent to:", user.email);
 
     const html = `
